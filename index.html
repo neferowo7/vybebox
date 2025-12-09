@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYBEBOX - Prime Video Vibe Finder</title>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/druk-cond-trial');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .druk-font {
+            font-family: 'Druk Cond Trial', 'Impact', 'Arial Black', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+        }
+        
+        .green-text {
+            color: #00FF41;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #171717;
+            border-bottom: 1px solid #1f2937;
+            padding: 12px 24px;
+            position: relative;
+            z-index: 50; /* Keeps nav on top */
+        }
+        
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+        }
+        
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #fff;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+        
+        .nav-right button {
+            background: none;
+            border: none;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .nav-right button:hover {
+            color: #fff;
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background-color: #000; /* Fallback color */
+        }
+        
+        /* THIS IS THE FIX: A dedicated class for the image tag */
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers the area without stretching */
+            z-index: 1; 
+            opacity: 0.6; /* Makes it slightly dark so text pops */
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10; /* Ensures text is on top of image */
+        }
+        
+        .marquee-container {
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .marquee-text {
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+            display: inline-block;
+        }
+        
+        .marquee-item {
+            display: inline-block;
+            font-size: 96px;
+            font-weight: 900;
+            font-style: italic;
+            margin: 0 64px;
+            -webkit-text-stroke: 1.5px #00FF41;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(0, 255, 65, 0.6);
+            letter-spacing: 0.05em;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.333%); }
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Vibe Section */
+        .vibe-section {
+            padding: 48px 0;
+            text-align: center;
+        }
+        
+        .vibe-section h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .vibe-section p {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        
+        .vibe-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            margin-bottom: 64px;
+        }
+        
+        .vibe-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: opacity 0.3s;
+        }
+        
+        .vibe-btn.inactive {
+            opacity: 0.4;
+        }
+        
+        .vibe-btn:hover.inactive {
+            opacity: 0.7;
+        }
+        
+        .vibe-icon {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            border: 4px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            background: #000;
+        }
+        
+        .vibe-label {
+            font-size: 18px;
+        }
+        
+        .vibe-label.active {
+            color: #00FF41;
+        }
+        
+        .vibe-label.inactive {
+            color: #9ca3af;
+        }
+        
+        /* Time Slider */
+        .slider-container {
+            max-width: 672px;
+            margin: 0 auto 32px;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .slider-labels span {
+            color: #00FF41;
+            font-size: 24px;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 4px;
+            border-radius: 9999px;
+            appearance: none;
+            cursor: pointer;
+            background: linear-gradient(to right, white 0%, white 50%, #374151 50%, #374151 100%);
+        }
+        
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .slider-caption {
+            margin-top: 16px;
+            font-size: 14px;
+        }
+        
+        /* Section Titles */
+        .section-title-large {
+            text-align: center;
+            padding: 48px 0;
+        }
+        
+        .section-title-large h2 {
+            font-size: 72px;
+            font-style: italic;
+            letter-spacing: 0.03em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        
+        .section-title-large p {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Movies Grid */
+        .movies-section {
+            margin-bottom: 64px;
+        }
+        
+        .movies-section h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .movie-card {
+            cursor: pointer;
+        }
+        
+        .movie-poster {
+            aspect-ratio: 3/4;
+            background: linear-gradient(to bottom right, #1f2937, #111827);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            border: 2px solid #1f2937;
+            transition: border-color 0.3s;
+        }
+
+        .poster-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .movie-card:hover .movie-poster {
+            border-color: #4ade80;
+        }
+        
+        .poster-label {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #dc2626;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .movie-card:hover .play-overlay {
+            opacity: 1;
+        }
+        
+        .play-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #4ade80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 12px solid #000;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            margin-left: 4px;
+        }
+        
+        .movie-title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .movie-time {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .shows-label {
+            text-align: right;
+            margin-bottom: 32px;
+        }
+        
+        .shows-label h3 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        /* Rent Section */
+        .rent-section {
+            padding: 64px 0;
+            text-align: center;
+        }
+        
+        .rent-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+        
+        .rent-card-poster {
+            aspect-ratio: 2/3;
+            background: linear-gradient(to bottom right, #1f2937, #111827);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 96px;
+            border: 2px solid #1f2937;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .rent-card:hover .rent-card-poster {
+            border-color: #4ade80;
+        }
+        
+        .poster-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            z-index: 5;
+        }
+        
+        .rent-card-title {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            text-align: left;
+            z-index: 10;
+            font-size: 36px;
+        }
+        
+        .rent-info {
+            margin-bottom: 16px;
+        }
+        
+        .rent-info p {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .price-strike {
+            text-decoration: line-through;
+            color: #6b7280;
+        }
+        
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .thumbnail {
+            aspect-ratio: 1;
+            background: #1f2937;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Trivia Section */
+        .trivia-section {
+            padding: 64px 0;
+        }
+        
+        .trivia-header {
+            margin-bottom: 48px;
+        }
+        
+        .trivia-header h2 {
+            font-size: 64px;
+            font-style: italic;
+            letter-spacing: 0.03em;
+            margin-bottom: 8px;
+        }
+        
+        .trivia-header p {
+            font-size: 14px;
+            font-style: italic;
+        }
+        
+        .trivia-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        
+        .trivia-featured {
+            cursor: pointer;
+        }
+        
+        .trivia-featured-poster {
+            aspect-ratio: 16/9;
+            background: linear-gradient(to bottom right, rgba(124, 45, 18, 0.6), rgba(120, 53, 15, 0.6));
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 96px;
+            border: 2px solid #1f2937;
+            transition: border-color 0.3s;
+        }
+        
+        .trivia-featured:hover .trivia-featured-poster {
+            border-color: #4ade80;
+        }
+        
+        .trivia-content {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            z-index: 10;
+        }
+        
+        .trivia-content h3 {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+        
+        .youtube-btn {
+            padding: 8px 16px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .trivia-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .trivia-item {
+            background: #111827;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border: 1px solid #1f2937;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .trivia-item:hover {
+            border-color: #4ade80;
+        }
+        
+        .trivia-thumbnail {
+            width: 128px;
+            height: 80px;
+            background: linear-gradient(to bottom right, #1f2937, #111827);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .thumb-label {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #dc2626;
+            color: white;
+            font-size: 10px;
+            padding: 2px 4px;
+            border-radius: 2px;
+            z-index: 10;
+        }
+        
+        .trivia-info {
+            flex: 1;
+        }
+        
+        .trivia-info h4 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .trivia-meta {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        @media (max-width: 768px) {
+            .movies-grid,
+            .rent-grid,
+            .trivia-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .vibe-buttons {
+                gap: 24px;
+            }
+            
+            .vibe-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+            
+            .marquee-item {
+                font-size: 48px;
+            }
+            
+            .section-title-large h2,
+            .trivia-header h2 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">primevideo</div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Movies</a>
+                    <a href="#">TV Shows</a>
+                    <a href="#">Sports</a>
+                    <a href="#">Live TV</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button>☰</button>
+                <button>Subscriptions</button>
+                <button>🔍</button>
+                <button>EN</button>
+                <button>👤</button>
+                <div class="green-text druk-font">VYBEBOX</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <!-- STEP 1: Make sure your image file is named "hero-banner.jpg" -->
+        <!-- STEP 2: Make sure it is in the same folder as this HTML file -->
+        <!-- Try changing .jpg to .webp or .png if it still doesn't work -->
+        <img src="imgs\Screenshot 2025-12-08 at 9.07.44 AM (1).png" alt="Background" class="hero-bg-img">
+
+        <div class="hero-overlay">
+            <div class="marquee-container">
+                <div class="marquee-text">
+                    <span class="marquee-item druk-font">YOUR STREAM</span>
+                    <span class="marquee-item druk-font">YOUR STREAM</span>
+                    <span class="marquee-item druk-font">YOUR STREAM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Vibe Section -->
+        <div class="vibe-section">
+            <h3>Today's Vibe: Laid Back Energy</h3>
+            <p>Select as per your vibes</p>
+            
+            <div class="vibe-buttons">
+                <button class="vibe-btn inactive" onclick="selectVibe('chill', this)">
+                    <div class="vibe-icon">😊</div>
+                    <span class="vibe-label inactive druk-font">CHILL</span>
+                </button>
+                <button class="vibe-btn" onclick="selectVibe('hype', this)">
+                    <div class="vibe-icon">😈</div>
+                    <span class="vibe-label active druk-font">HYPE</span>
+                </button>
+                <button class="vibe-btn inactive" onclick="selectVibe('emo', this)">
+                    <div class="vibe-icon">😠</div>
+                    <span class="vibe-label inactive druk-font">EMO</span>
+                </button>
+                <button class="vibe-btn inactive" onclick="selectVibe('focused', this)">
+                    <div class="vibe-icon">😱</div>
+                    <span class="vibe-label inactive druk-font">FOCUSED</span>
+                </button>
+            </div>
+
+            <!-- Time Slider -->
+            <div class="slider-container">
+                <div class="slider-labels druk-font">
+                    <span>30</span>
+                    <span>45</span>
+                    <span>60</span>
+                </div>
+                <input type="range" class="slider" min="30" max="60" step="15" value="45" oninput="updateSlider(this)">
+                <p class="slider-caption">Time slider as per your vibe</p>
+            </div>
+        </div>
+
+        <!-- Dynamic Mood Feed -->
+        <div class="section-title-large">
+            <h2 class="druk-font green-text">DYNAMIC MOOD FEED</h2>
+            <p class="green-text druk-font">BASED ON YOUR CURRENT ENERGY</p>
+        </div>
+
+        <!-- Movies Section -->
+        <div class="movies-section">
+            <h3>MOVIES</h3>
+            <div class="movies-grid">
+                <!-- Movie Card 1 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Family+Man" alt="Family Man" class="poster-image">
+                        <div class="poster-label">PRIME</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">FAMILY MAN</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+                <!-- Movie Card 2 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Playdate" alt="Playdate" class="poster-image">
+                        <div class="poster-label">NEW</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">PLAYDATE</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+                <!-- Movie Card 3 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Music+Life" alt="Music" class="poster-image">
+                        <div class="poster-label">HD</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">MUSIC LIFE</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+                <!-- Movie Card 4 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Art+Heist" alt="Art" class="poster-image">
+                        <div class="poster-label">4K</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">ART HEIST</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="movies-grid">
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=The+Office" alt="Movie" class="poster-image">
+                        <div class="poster-label">POSTER</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">THE OFFICE</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Game+On" alt="Movie" class="poster-image">
+                        <div class="poster-label">POSTER</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">GAME ON</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Concert" alt="Movie" class="poster-image">
+                        <div class="poster-label">POSTER</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">CONCERT</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://placehold.co/300x400/1f2937/fff?text=Painter" alt="Movie" class="poster-image">
+                        <div class="poster-label">POSTER</div>
+                        <div class="play-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="movie-title">PAINTER</h4>
+                    <p class="movie-time">2hrs 30 min</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shows Label -->
+        <div class="shows-label">
+            <h3>SHOWS</h3>
+        </div>
+
+        <!-- Rent Section -->
+        <div class="rent-section">
+            <h2 class="druk-font green-text" style="font-size: 72px; font-style: italic; letter-spacing: 0.03em; margin-bottom: 24px; line-height: 1.2;">TIRED OF RENTING CONTENT</h2>
+            <p class="green-text druk-font" style="font-size: 12px; margin-bottom: 48px; letter-spacing: 0.05em; line-height: 1.6;">
+                CHOOSE THE MOVIES U WANNA WATCH AS PER YOUR VIBE AND GET A RENTED MOVIE FREE TO WATCH<br>
+                PLUS AN UPCOMING PREMIUM TV SHOW FOR FREE
+            </p>
+
+            <div class="rent-grid">
+                <!-- Rent Card 1 -->
+                <div class="rent-card">
+                    <div class="rent-card-poster">
+                        <img src="https://placehold.co/400x600/1f2937/fff?text=Caught+Stealing" alt="Caught Stealing" class="poster-image">
+                        <div class="poster-label">RENT</div>
+                        <div class="poster-gradient"></div>
+                        <div class="rent-card-title druk-font">CAUGHT STEALING</div>
+                    </div>
+                    <div class="rent-info druk-font">
+                        <p>RENT MOVIE</p>
+                        <p>HD ₹<span class="price-strike">249</span> ₹0</p>
+                    </div>
+                    <div class="thumbnails-grid">
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=1" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=2" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=3" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=4" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=5" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=6" class="poster-image"></div>
+                    </div>
+                </div>
+                <!-- Rent Card 2 -->
+                <div class="rent-card">
+                    <div class="rent-card-poster">
+                        <img src="https://placehold.co/400x600/1f2937/fff?text=Maalik" alt="Maalik" class="poster-image">
+                        <div class="poster-label">TOP 10</div>
+                        <div class="poster-gradient"></div>
+                        <div class="rent-card-title druk-font">MAALIK</div>
+                    </div>
+                    <div class="rent-info druk-font">
+                        <p>RENT MOVIE</p>
+                        <p>HD ₹<span class="price-strike">449</span> ₹0</p>
+                    </div>
+                    <div class="thumbnails-grid">
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=1" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=2" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=3" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=4" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=5" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=6" class="poster-image"></div>
+                    </div>
+                </div>
+                <!-- Rent Card 3 -->
+                <div class="rent-card">
+                    <div class="rent-card-poster">
+                        <img src="https://placehold.co/400x600/1f2937/fff?text=Untold" alt="Untold" class="poster-image">
+                        <div class="poster-label">NEW</div>
+                        <div class="poster-gradient"></div>
+                        <div class="rent-card-title druk-font">UNTOLD</div>
+                    </div>
+                    <div class="rent-info druk-font">
+                        <p>RENT MOVIE</p>
+                        <p>HD ₹<span class="price-strike">149</span> ₹0</p>
+                    </div>
+                    <div class="thumbnails-grid">
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=1" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=2" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=3" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=4" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=5" class="poster-image"></div>
+                        <div class="thumbnail"><img src="https://placehold.co/100x100?text=6" class="poster-image"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Watch to Unlock -->
+        <div class="section-title-large">
+            <h2 class="druk-font" style="font-style: italic; color: white;">
+                WATCH TO UNLOCK RENTED<br>
+                CONTENT FOR FREE
+            </h2>
+        </div>
+
+        <!-- Trivia Section -->
+        <div class="trivia-section">
+            <div class="trivia-header">
+                <h2 class="druk-font green-text">CATCH UP TRIVIA....</h2>
+                <p class="green-text druk-font">Dive deeper into what u like</p>
+            </div>
+
+            <div class="trivia-grid">
+                <div class="trivia-featured">
+                    <div class="trivia-featured-poster">
+                        <img src="https://placehold.co/800x450/1f2937/fff?text=Maalik+Featured" alt="Maalik" class="poster-image">
+                        <div class="poster-label">FEATURED</div>
+                        <div class="poster-gradient"></div>
+                        <div class="trivia-content">
+                            <h3 class="druk-font">MAALIK</h3>
+                            <button class="youtube-btn">YOUTUBE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trivia-list">
+                    <div class="trivia-item">
+                        <div class="trivia-thumbnail">
+                            <img src="https://placehold.co/200x150/1f2937/fff?text=Clip+1" alt="Clip" class="poster-image">
+                            <div class="thumb-label">VID</div>
+                        </div>
+                        <div class="trivia-info">
+                            <h4>Ravi Upadhyay Maalik | Hafiz | September Day</h4>
+                            <p class="trivia-meta">View count • Duration: 25 MIN</p>
+                        </div>
+                    </div>
+                    <div class="trivia-item">
+                        <div class="trivia-thumbnail">
+                            <img src="https://placehold.co/200x150/1f2937/fff?text=Clip+2" alt="Clip" class="poster-image">
+                            <div class="thumb-label">VID</div>
+                        </div>
+                        <div class="trivia-info">
+                            <h4>MAALIK - Best Cute Moments</h4>
+                            <p class="trivia-meta">View count • Duration: 15 MIN</p>
+                        </div>
+                    </div>
+                    <div class="trivia-item">
+                        <div class="trivia-thumbnail">
+                            <img src="https://placehold.co/200x150/1f2937/fff?text=Clip+3" alt="Clip" class="poster-image">
+                            <div class="thumb-label">VID</div>
+                        </div>
+                        <div class="trivia-info">
+                            <h4>Throwback: #111 | Maalik</h4>
+                            <p class="trivia-meta">View count • Duration: 10 MIN</p>
+                        </div>
+                    </div>
+                    <div class="trivia-item">
+                        <div class="trivia-thumbnail">
+                            <img src="https://placehold.co/200x150/1f2937/fff?text=Clip+4" alt="Clip" class="poster-image">
+                            <div class="thumb-label">VID</div>
+                        </div>
+                        <div class="trivia-info">
+                            <h4>Prateek! Challenge Toh STONER</h4>
+                            <p class="trivia-meta">View count • Duration: 20 MIN</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: #0a0a0a; border-top: 1px solid #1f2937; margin-top: 80px;">
+        <div class="container" style="padding: 64px 24px 32px;">
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 48px; margin-bottom: 64px;">
+                <!-- Product Column -->
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em;">PRODUCT</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px; transition: color 0.3s;">New Releases</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Features</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Browse</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Discover</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Watch Later</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Personalize</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Pricing</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Student Plan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community Column -->
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em;">COMMUNITY</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Discord</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Reddit Community</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">X / Twitter</a></li>
+                        <li style="margin-bottom: 24px;"></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Getting Started Guide</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Recommendations</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Column -->
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em;">SUPPORT</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Help Center</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Contact Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Column -->
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em;">COMPANY</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">About us</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Blog</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Careers</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Partner Program</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Media</a></li>
+                        <li style="margin-bottom: 24px;"></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px; font-weight: 600;">Legal</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Terms</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Privacy Policy</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Security</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">ESG</a></li>
+                        <li style="margin-bottom: 12px; padding-left: 20px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Responsible Disclosure</a></li>
+                    </ul>
+                </div>
+
+                <!-- Download Column -->
+                <div>
+                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em;">DOWNLOAD</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">VybeBox for iPhone</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">VybeBox for iPad</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">VybeBox for Mac</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">VybeBox for Windows</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">VybeBox for Android TV</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid #1f2937;">
+                <p style="color: #6b7280; font-size: 14px; margin: 0;">© 2025 VybeBox Entertainment, Inc. All rights reserved.</p>
+                <div style="display: flex; align-items: center; gap: 24px;">
+                    <button style="background: none; border: none; color: #9ca3af; font-size: 14px; cursor: pointer; padding: 0;">English</button>
+                    <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 20px;">📷</a>
+                    <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 20px;">▶️</a>
+                    <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 20px;">𝕏</a>
+                    <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 20px;">in</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function selectVibe(vibeId, button) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.vibe-btn').forEach(btn => {
+                btn.classList.add('inactive');
+                btn.classList.remove('active');
+                btn.querySelector('.vibe-label').classList.add('inactive');
+                btn.querySelector('.vibe-label').classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            button.classList.remove('inactive');
+            button.classList.add('active');
+            button.querySelector('.vibe-label').classList.remove('inactive');
+            button.querySelector('.vibe-label').classList.add('active');
+        }
+        
+        function updateSlider(slider) {
+            const min = parseInt(slider.min);
+            const max = parseInt(slider.max);
+            const value = parseInt(slider.value);
+            const percentage = ((value - min) / (max - min)) * 100;
+            
+            slider.style.background = `linear-gradient(to right, white 0%, white ${percentage}%, #374151 ${percentage}%, #374151 100%)`;
+        }
+    </script>
+</body>
+</html>
